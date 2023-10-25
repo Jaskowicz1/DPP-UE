@@ -42,28 +42,34 @@ void FDppUEModule::StartupModule()
 	libsslLibraryPath = FPaths::Combine(*BaseDir, TEXT("Source/ThirdParty/DppUELibrary/Win64"), *ConfigType, TEXT("libssl-1_1-x64.dll"));
 	opusLibraryPath = FPaths::Combine(*BaseDir, TEXT("Source/ThirdParty/DppUELibrary/Win64"), *ConfigType, TEXT("opus.dll"));
 	zlibLibraryPath = FPaths::Combine(*BaseDir, TEXT("Source/ThirdParty/DppUELibrary/Win64"), *ConfigType, TEXT("zlib1.dll"));
-#elif PLATFORM_LINUX
-	dppLibraryPath = FPaths::Combine(*BaseDir, TEXT("Binaries/ThirdParty/DppUELibrary/Linux/libdpp.so"));
-	// Linux should already have libcrypto installed. They will NEED to install zlib and OpenSSL and any other additional libraries.
-	// I don't agree with it but, for now, that's how it was to be.
-#endif // PLATFORM_WINDOWS
-	
+
 	libcryptoLibraryHandle = !libcryptoLibraryPath.IsEmpty() ? FPlatformProcess::GetDllHandle(*libcryptoLibraryPath) : nullptr;
 	libsodiumLibraryHandle = !libsodiumLibraryPath.IsEmpty() ? FPlatformProcess::GetDllHandle(*libsodiumLibraryPath) : nullptr;
 	libsslLibraryHandle = !libsslLibraryPath.IsEmpty() ? FPlatformProcess::GetDllHandle(*libsslLibraryPath) : nullptr;
 	opusLibraryHandle = !opusLibraryPath.IsEmpty() ? FPlatformProcess::GetDllHandle(*opusLibraryPath) : nullptr;
 	zlibLibraryHandle = !zlibLibraryPath.IsEmpty() ? FPlatformProcess::GetDllHandle(*zlibLibraryPath) : nullptr;
+	
+#elif PLATFORM_LINUX
+	dppLibraryPath = FPaths::Combine(*BaseDir, TEXT("Source/ThirdParty/DppUELibrary/Linux"), *ConfigType, TEXT("libdpp.so"));
+	// Linux should already have libcrypto installed. They will NEED to install zlib and OpenSSL and any other additional libraries.
+	// I don't agree with it but, for now, that's how it was to be.
+#endif // PLATFORM_WINDOWS
 	dppLibraryHandle = !dppLibraryPath.IsEmpty() ? FPlatformProcess::GetDllHandle(*dppLibraryPath) : nullptr;
 
-	if (libcryptoLibraryHandle && libsodiumLibraryHandle && libsslLibraryHandle && opusLibraryHandle && zlibLibraryHandle && dppLibraryHandle)
-	{
-		// Call the test function in the third party library that opens a message box
-		//ExampleLibraryFunction();
-	}
-	else
+	// Eventually just swap this out for a function that will load each library into a handle.
+	// That way, we don't need the spam of #if
+
+#if PLATFORM_WINDOWS
+	if (!libcryptoLibraryHandle || !libsodiumLibraryHandle || !libsslLibraryHandle || !opusLibraryHandle || !zlibLibraryHandle || !dppLibraryHandle)
 	{
 		FMessageDialog::Open(EAppMsgType::Ok, LOCTEXT("DppUEModule", "Failed to load DPP."));
 	}
+#else
+	if (!dppLibraryHandle)
+	{
+		FMessageDialog::Open(EAppMsgType::Ok, LOCTEXT("DppUEModule", "Failed to load DPP."));
+	}
+#endif
 }
 
 void FDppUEModule::ShutdownModule()

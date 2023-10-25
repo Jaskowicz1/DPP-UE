@@ -65,18 +65,16 @@ public class DppUELibrary : ModuleRules
             PublicDelayLoadDLLs.Add(Path.Combine(ModuleDirectory, "Mac", ConfigType, "libExampleLibrary.dylib"));
             RuntimeDependencies.Add("$(PluginDir)/Source/ThirdParty/DppUELibrary/Mac/Release/libExampleLibrary.dylib");
         }
-        else if (Target.Platform == UnrealTargetPlatform.Linux)
+        else
 		{
-			string ExampleSoPath = Path.Combine("$(PluginDir)", "Binaries", "ThirdParty", "DppUELibrary", "Linux", "x86_64-unknown-linux-gnu", "libExampleLibrary.so");
-			PublicAdditionalLibraries.Add(ExampleSoPath);
-			PublicDelayLoadDLLs.Add(ExampleSoPath);
-			RuntimeDependencies.Add(ExampleSoPath);
+			string DppLinuxPath = Path.Combine("$(PluginDir)", "Source", "ThirdParty", "DppUELibrary", "Linux", "Release", "libdpp.so");
+			PublicAdditionalLibraries.Add(DppLinuxPath);
+			PublicDelayLoadDLLs.Add(DppLinuxPath);
+			RuntimeDependencies.Add(DppLinuxPath);
 		}
 	}
 	
 	private string DppPath => Path.GetFullPath(Path.Combine(ModuleDirectory, "Include"));
-
-	//private string ConfigType => Target.Configuration == UnrealTargetConfiguration.Debug ? "Debug" : "Release";
 	private string ConfigType => (Target.Configuration == UnrealTargetConfiguration.Debug || Target.bDebugBuildsActuallyUseDebugCRT) ? "Debug" : "Release";
 
 	private string DppLib =>
@@ -109,7 +107,7 @@ public class DppUELibrary : ModuleRules
 			if (Target.Platform == UnrealTargetPlatform.Mac)
 				return "dpp.dylib";
 			if (Target.Platform == UnrealTargetPlatform.Linux)
-				return "dpp.so";
+				return "libdpp.so";
 			return null;
 		}
 	}
