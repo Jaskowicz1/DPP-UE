@@ -1,0 +1,17 @@
+build:
+- '**Source/ThirdParty/DppUELibrary/DppUELibrary.Build.cs'
+- '**Config/FilterPlugin.ini'
+code:
+- '**Source/DppUE/**'
+- '**include/**'
+documentation:
+- '**README.md'
+DPP:
+- '**Source/ThirdParty/DppUELibrary/Include/**'
+- '**Source/ThirdParty/DppUELibrary/Win64/**'
+- '**Source/ThirdParty/DppUELibrary/Linux/**'
+- '**Source/ThirdParty/DppUELibrary/Mac/**'
+github_actions:
+- '**.github/labeler.yml'
+- '**.github/dependabot.yml'
+- '**.github/workflows/**'
