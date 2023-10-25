@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "DppUE",
+	"Description": "Dpp Integration in Unreal Engine!",
+	"Category": "Discord",
+	"CreatedBy": "Archie Jaskowicz",
+	"CreatedByURL": "https://jaskowicz.xyz",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "DppUE",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
