@@ -5,7 +5,7 @@
 #include <memory>
 
 #include "CoreMinimal.h"
-#include "CoreUObject/Public/UObject/Object.h"
+#include "UObject/Object.h"
 
 THIRD_PARTY_INCLUDES_START
 #include <dpp/dpp.h>
