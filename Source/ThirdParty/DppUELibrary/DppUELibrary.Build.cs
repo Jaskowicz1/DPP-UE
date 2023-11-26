@@ -23,7 +23,9 @@ public class DppUELibrary : ModuleRules
 				"dpp.dll could not be found! Please double check your installation. If the problem persists, please reach out at https://jaskowicz.xyz/");
 		
 		PublicIncludePaths.Add(DppPath);
-
+        
+        bEnableExceptions = true;
+        
 		if (Target.Platform == UnrealTargetPlatform.Win64)
 		{
 
